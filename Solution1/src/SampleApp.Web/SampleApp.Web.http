@@ -1,0 +1,11 @@
+@SampleAppWeb_HostAddress = https://localhost:7244
+
+GET {{SampleAppWeb_HostAddress}}/contacts/
+Accept: application/json
+
+###
+
+POST {{SampleAppWeb_HostAddress}}/contacts/sample-data
+Accept: application/json
+
+###
