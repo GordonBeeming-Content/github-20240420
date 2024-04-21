@@ -1,4 +1,3 @@
-
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.Debug;
@@ -11,7 +10,9 @@ var debugLoggerFactory = new LoggerFactory(new[] { new DebugLoggerProvider() });
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
+                       Environment.GetEnvironmentVariable("SQLAZURECONNSTR_DefaultConnection") ??
+                       throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
   options.UseSqlServer(connectionString, sqlServerOptions => sqlServerOptions.CommandTimeout(300));
